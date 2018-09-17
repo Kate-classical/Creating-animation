@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="WpfApp20._06.UserControl2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp20._06"
+             mc:Ignorable="d" 
+             Width="{Binding Width}" Height="75">
+    <UserControl.Background>
+        <SolidColorBrush Color="{Binding Color}"/>
+    </UserControl.Background>
+    <Grid>
+        <Viewbox Stretch="Uniform">
+            <TextBlock Foreground="AliceBlue" Text="{Binding Text}" Name="textScript" FontWeight="Bold" FontStyle="Normal" FontFamily="Calibri" FontSize="18" 
+                       Margin="0,0,0,0" Width="{Binding Width}"/>
+        </Viewbox>
+        <TextBox Name="textCount"  Height="19" Margin="2,2,1,0" HorizontalAlignment="Right" TextWrapping="Wrap"  FontSize="10" VerticalAlignment="Top" Width="25" 
+                 LostFocus="textCount_LostFocus" GotFocus="textCount_GotFocus">
+            <TextBox.Template>
+                <ControlTemplate>
+                    <Border CornerRadius="5" Padding="3" Background="White" BorderThickness="1" BorderBrush="AliceBlue">
+                        <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
+                    </Border>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
+        <Rectangle Width="20" Height="20" Fill="{Binding Color}" RenderTransformOrigin="0.58,1.46" Margin="0,20,0,0" ></Rectangle>
+        <Rectangle Width="50" Fill="{Binding Color}" RenderTransformOrigin="0.58,1.46" Margin="0,48,0,0.2" />
+    </Grid>
+</UserControl>

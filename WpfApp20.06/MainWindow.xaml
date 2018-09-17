@@ -1,0 +1,80 @@
+﻿<Window x:Class="WpfApp20._06.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        
+        xmlns:local="clr-namespace:WpfApp20._06"
+          xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" 
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1100">
+    <Grid Loaded="Grid_Loaded" MouseLeftButtonUp="Canvas_MouseLeftButtonUp">
+
+        <ItemsControl Drop="compilar_Drop" DragOver="compilar_DragOver" Width="300" Height="564" Loaded="DraggableItemsHost_Loaded"
+                   HorizontalAlignment="Left" Name="DraggableItemsHost" VerticalAlignment="Bottom"   Background="Beige" Margin="0,0,0,0.4" 
+                      BorderBrush="DarkCyan"  BorderThickness="10"
+                      ItemsSource="{Binding Squares}"
+                      >
+           
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!-- хост списка элементов - канвас, чтобы можно было
+                         произвольно устанавливать координаты -->
+                    <Canvas IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!-- сам квадрат вынесем в отдельный UserControl -->
+                    <local:UserControl1 DraggedImageContainer="{Binding ElementName=DraggedImageContainer}"
+                         TextScriptCommand="{Binding ElementName=TextScriptCommand}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <!-- а это привязка координат контейнера к VM -->
+                    <Setter Property="Canvas.Left" Value="{Binding Position.X}"/>
+                    <Setter Property="Canvas.Top" Value="{Binding Position.Y}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+
+
+        <Canvas IsHitTestVisible="False" Margin="0,6,-0.4,-5.6">
+            <Rectangle Opacity="0.4" Name="DraggedImageContainer" Visibility="Collapsed" MouseLeftButtonUp="Canvas_MouseLeftButtonUp"/>
+            <StackPanel  MouseLeftButtonUp="Canvas_MouseLeftButtonUp" Name="Compilar" Canvas.Left="243" RenderTransformOrigin="0.5,0.5" Margin="309,0,428.6,0.4"  >
+                <StackPanel.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleX="-0.125"/>
+                        <RotateTransform/>
+                        <TranslateTransform X="-1.198"/>
+                    </TransformGroup>
+                </StackPanel.RenderTransform>
+            </StackPanel>
+            <TextBlock Canvas.Left="297" TextAlignment="Center" Foreground="Green" TextWrapping="Wrap" Text="Компилятор" FontSize="18" Height="25" Width="380" Background="LightGreen" Canvas.Top="8"/>
+            <DockPanel Height="14" LastChildFill="False" Canvas.Left="297" Canvas.Top="548" Width="380" Background="DarkCyan"/>
+            <DockPanel Height="14" LastChildFill="False" Canvas.Left="297" Canvas.Top="-7" Width="380" Background="DarkCyan"/>
+        </Canvas>
+        <Canvas Name="docPanel" HorizontalAlignment="Right" Height="570"  Margin="0,0,0,0" Background="DarkCyan" 
+                   VerticalAlignment="Top" Width="423" >
+            <Border  BorderThickness="10" Background="AliceBlue" Height="560" Width="423"/>
+
+            <Canvas Name="RFID_Reader" SnapsToDevicePixels="True" >
+                <Ellipse Height="50" HorizontalAlignment="Left" Name="RFID_Token" VerticalAlignment="Top" Width="50"  Fill="Blue" Canvas.Left="160" Canvas.Top="240" />
+            </Canvas>
+            <Button  Height="27" VerticalAlignment="Top" Width="68" Click="Button_Click_2" Canvas.Top="10" Canvas.Left="10">
+                <Button.Content>
+                    <Rectangle Height="15" Fill="Black" Width="15"/>
+                </Button.Content>
+            </Button>
+            <Button  Height="27" VerticalAlignment="Top" Width="68" Click="Button_Click_3" Canvas.Top="10" Canvas.Left="80">
+                <Ellipse Height="15" Fill="Black" Width="15"/>
+            </Button>
+            <Button Content="Справка" Height="25" VerticalAlignment="Top" Width="53" Click="Button_ClickSpravka" Canvas.Top="8" Canvas.Left="-654">
+            </Button>
+        </Canvas>
+
+        <TextBox Name="FocusControl" HorizontalAlignment="Left" Width="0" Height="0"/>
+        <Button Content="Очистить" Foreground="Green" Background="LightGreen" HorizontalAlignment="Left" Margin="298,0,0,509.4" Width="75" RenderTransformOrigin="0.397,-0.854" Click="Button_Click_1" Height="19" VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>
